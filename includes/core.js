@@ -52,8 +52,10 @@ pub.go = function (mode) {
       runDrawOnce();
     };
   } catch (e) {
-
-    if(pub.VERBOSE_ERRORS === true) {
+    // A bit more verbose error reporting
+    // if the DEBUG flag is true the error gets passed up
+    // into this try catch
+    if(pub.VERBOSE_ERRORS === true || pub.DEBUG === true) {
       var msg = verboseErrorMsg(e);
       alert(msg);
     }else{
@@ -139,27 +141,48 @@ pub.noLoop = function() {
 
 
 var runSetup = function() {
-  app.doScript(function() {
-    if (typeof glob.setup === "function") {
+  if(pub.DEBUG === false) {
+
+    app.doScript(function() {
+      if (typeof glob.setup === "function") {
+        glob.setup();
+      }
+    }, ScriptLanguage.javascript, undef, UndoModes.ENTIRE_SCRIPT);
+  }else{
+    if (typeof glob.setup === "function") {  // eslint-disable-line no-lonely-if
       glob.setup();
     }
-  }, ScriptLanguage.javascript, undef, UndoModes.ENTIRE_SCRIPT);
+  }
 };
 
 var runDrawOnce = function() {
-  app.doScript(function() {
-    if (typeof glob.draw === "function") {
+  if(pub.DEBUG === false) {
+
+    app.doScript(function() {
+      if (typeof glob.draw === "function") {
+        glob.draw();
+      }
+    }, ScriptLanguage.javascript, undef, UndoModes.ENTIRE_SCRIPT);
+  } else {
+    if (typeof glob.draw === "function") {  // eslint-disable-line no-lonely-if
       glob.draw();
     }
-  }, ScriptLanguage.javascript, undef, UndoModes.ENTIRE_SCRIPT);
+  }
 };
 
 var runDrawLoop = function() {
-  app.doScript(function() {
-    if (typeof glob.draw === "function") {
+  if(pub.DEBUG === false) {
+
+    app.doScript(function() {
+      if (typeof glob.draw === "function") {
+        glob.draw();
+      }
+    }, ScriptLanguage.javascript, undef, UndoModes.ENTIRE_SCRIPT);
+  } else {
+    if (typeof glob.draw === "function") { // eslint-disable-line no-lonely-if
       glob.draw();
     }
-  }, ScriptLanguage.javascript, undef, UndoModes.ENTIRE_SCRIPT);
+  }
 };
 
 var welcome = function() {
@@ -449,7 +472,11 @@ var error = pub.error = function(msg) {
     // to have more informational errors we need to work on call of the draw/setup functions
     // we could provide some more information just by extending the message
     // but we can't trace the error as long as we use the app.doScript function
-    // a possibility would be calling $.evalFile
+    // a possibility would be calling $.eval
+    //
+    // For this function here I would suggest something like
+    // error(msg, description)
+    // but that would mean to write a extended description every time we use this.
     throw new Error(ERROR_PREFIX + msg);
   }
 };
