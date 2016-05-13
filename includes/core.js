@@ -451,7 +451,6 @@ var error = pub.error = function(msg) {
     // but we can't trace the error as long as we use the app.doScript function
     // a possibility would be calling $.evalFile
     throw new Error(ERROR_PREFIX + msg);
-
   }
 };
 
