@@ -1,11 +1,13 @@
 {
-    "parser": "babel-eslint",
+   // "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 3
+        },
     "env": {
         "node": true,
         //"es6":true
     },
     "ecmaFeatures": {
-        "jsx": true
     },
     "globals": {
     },
@@ -34,7 +36,7 @@
         "no-negated-in-lhs": 2,
         "no-obj-calls": 2,
         "no-regex-spaces": 2,
-        "no-reserved-keys": 0,
+        "no-reserved-keys": 2,
         "no-sparse-arrays": 2,
         "no-unreachable": 2,
         "use-isnan": 2,
