@@ -54,6 +54,8 @@
    */
   pub.VERSION = "1.0.10";
 
+  pub.VERBOSE_ERRORS = true; // gives the user more verbose errors
+
   #include "includes/constants.js";
   #include "includes/public-vars.js";
   #include "includes/private-vars.js";
